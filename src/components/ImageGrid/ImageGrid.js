@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { loadImages } from '../../actions';
 import Button from '../Button';
+import Stats from '../Stats';
 
 import './styles.css';
 
@@ -12,17 +13,18 @@ class ImageGrid extends Component {
     }
 
     render() {
-        const { images, error, isLoading, loadImages } = this.props;
+        const { images, error, isLoading, loadImages, imageStats } = this.props;
         return (
             <div className="content">
                 <section className="grid">
-                    {images.map(image => (
+                    {images.map((image, idx) => (
                         <div
-                            key={image.id}
+                            key={image.id + '-' + idx}
                             className={`item item-${Math.ceil(
                                 image.height / image.width,
                             )}`}
                         >
+                            <Stats stats={imageStats[image.id]}/>
                             <img
                                 src={image.urls.small}
                                 alt={image.user.username}
@@ -42,8 +44,8 @@ class ImageGrid extends Component {
     }
 }
 
-const mapStateToProps = ({ isLoading, images, error }) => ({
-    isLoading, images, error
+const mapStateToProps = ({ isLoading, images, error, imageStats }) => ({
+    isLoading, images, error, imageStats
 });
 
 const mapDispatchToProps = dispatch => ({
