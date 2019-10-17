@@ -4,9 +4,9 @@ import { IMAGES } from '../constants';
 import { setImages, setError } from '../actions';
 import { fetchImages } from '../apis';
 
-const getPage = state => state.nextPage;
+export const getPage = state => state.nextPage;
 
-function* handleImagesLoad() {
+export function* handleImagesLoad() {
     try {
         const page = yield select(getPage);
         const images = yield call(fetchImages, page);
